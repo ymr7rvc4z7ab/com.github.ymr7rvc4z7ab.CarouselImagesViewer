@@ -1,0 +1,52 @@
+id: com.github.ymr7rvc4z7ab.CarouselImagesViewer
+version: 1.2.0
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.dotnet10
+build-options:
+  prepend-path: "/usr/lib/sdk/dotnet10/bin"
+  append-ld-library-path: "/usr/lib/sdk/dotnet10/lib"
+  prepend-pkg-config-path: "/usr/lib/sdk/dotnet10/lib/pkgconfig"
+  arch:
+    aarch64:
+      env:
+        RUNTIME: linux-arm64
+    x86_64:
+      env:
+        RUNTIME: linux-x64
+
+command: CarouselImagesViewer
+
+finish-args:
+  - --env=DOTNET_ROOT=/app/lib/dotnet
+  - --socket=x11
+  - --socket=wayland
+  - --device=dri
+  - --filesystem=host:ro
+
+modules:
+  - name: dotnet
+    buildsystem: simple
+    build-commands:
+    - /usr/lib/sdk/dotnet10/bin/install.sh
+
+  - name: CarouselImagesViewer
+    buildsystem: simple
+    sources:
+      - type: git
+        url: https://github.com/ymr7rvc4z7ab/CarouselImagesViewer.git
+        commit: b5dbfe08c7cb2b8541c2f208294a30a10db4de9f
+        tag: v1.2.0
+      - ./nuget-sources.json
+      - type: file
+        path: com.github.ymr7rvc4z7ab.CarouselImagesViewer.desktop
+      - type: file
+        path: com.github.ymr7rvc4z7ab.CarouselImagesViewer.svg
+    build-commands:
+      - mkdir -p ${FLATPAK_DEST}/bin
+      - dotnet publish -c Release --source ./nuget-sources --source /usr/lib/sdk/dotnet10/nuget/packages CarouselImagesViewer.csproj --runtime $RUNTIME --self-contained true
+      - cp -r --remove-destination /run/build/CarouselImagesViewer/bin/Release/net10.0/$RUNTIME/publish/* /app/bin/
+      - install -D com.github.ymr7rvc4z7ab.CarouselImagesViewer.desktop /app/share/applications/$FLATPAK_ID.desktop
+      - install -D com.github.ymr7rvc4z7ab.CarouselImagesViewer.svg /app/share/icons/hicolor/scalable/apps/$FLATPAK_ID.svg
