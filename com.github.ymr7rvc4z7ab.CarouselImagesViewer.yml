@@ -46,7 +46,7 @@ modules:
         path: com.github.ymr7rvc4z7ab.CarouselImagesViewer.svg
     build-commands:
       - mkdir -p ${FLATPAK_DEST}/bin
-      - dotnet publish -c Release --source ./nuget-sources --source /usr/lib/sdk/dotnet10/nuget/packages CarouselImagesViewer.csproj --runtime $RUNTIME --self-contained true
+      - dotnet publish -c Release --source ./nuget-sources --source /usr/lib/sdk/dotnet10/nuget/packages CarouselImagesViewer.csproj --runtime $RUNTIME --no-self-contained
       - cp -r --remove-destination /run/build/CarouselImagesViewer/bin/Release/net10.0/$RUNTIME/publish/* /app/bin/
       - install -D com.github.ymr7rvc4z7ab.CarouselImagesViewer.desktop /app/share/applications/$FLATPAK_ID.desktop
       - install -D com.github.ymr7rvc4z7ab.CarouselImagesViewer.svg /app/share/icons/hicolor/scalable/apps/$FLATPAK_ID.svg
