@@ -1,5 +1,5 @@
 id: com.github.ymr7rvc4z7ab.CarouselImagesViewer
-version: 1.2.0
+version: 1.3.0
 runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
@@ -37,8 +37,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/ymr7rvc4z7ab/CarouselImagesViewer.git
-        commit: b5dbfe08c7cb2b8541c2f208294a30a10db4de9f
-        tag: v1.2.0
+        commit: b19593a70344a8f2199464c5f079cd690700c329
+        tag: v1.3.0
       - ./nuget-sources.json
       - type: file
         path: com.github.ymr7rvc4z7ab.CarouselImagesViewer.desktop
