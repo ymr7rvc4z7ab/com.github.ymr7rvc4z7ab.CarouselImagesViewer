@@ -35,10 +35,8 @@ modules:
   - name: CarouselImagesViewer
     buildsystem: simple
     sources:
-      - type: git
-        url: https://github.com/ymr7rvc4z7ab/CarouselImagesViewer.git
-        commit: b19593a70344a8f2199464c5f079cd690700c329
-        tag: v1.3.0
+      - type: dir
+        path: CarouselImagesViewer
       - ./nuget-sources.json
       - type: file
         path: com.github.ymr7rvc4z7ab.CarouselImagesViewer.desktop

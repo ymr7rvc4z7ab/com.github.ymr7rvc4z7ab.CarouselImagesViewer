@@ -20,6 +20,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Checkout Source Repository
+        uses: actions/checkout@v6
+        repository: 'ymr7rvc4z7ab/CarouselImagesViewer'
+        ref: 'main'
+        token: {{ secrets.SOURCE_TOKEN }}
+
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v6
