@@ -39,11 +39,16 @@ jobs:
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      
+      - name: Rename icon
+        run: mv com.github.ymr7rvc4z7ab.CarouselImagesViewer.svg icon.svg
 
       - name: Upload Flatpak Repository Artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v6
         with:
-          path: repo/
+          path: |
+            repo/
+            icon.svg
 
   deploy:
     needs: build
