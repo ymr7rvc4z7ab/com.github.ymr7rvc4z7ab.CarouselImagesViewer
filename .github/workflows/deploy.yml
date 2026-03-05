@@ -49,14 +49,12 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       
       - name: Rename icon
-        run: mv com.github.ymr7rvc4z7ab.CarouselImagesViewer.svg icon.svg
+        run: mv com.github.ymr7rvc4z7ab.CarouselImagesViewer.svg repo/icon.svg
 
       - name: Upload Flatpak Repository Artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: |
-            repo/
-            icon.svg
+          path: repo/
 
   deploy:
     needs: build
