@@ -57,7 +57,7 @@ jobs:
         run: mv com.github.ymr7rvc4z7ab.CarouselImagesViewer.svg icon.svg
 
       - name: Upload Flatpak Repository Artifact
-        uses: actions/upload-pages-artifact@v6
+        uses: actions/upload-pages-artifact@v4
         with:
           path: |
             repo/
