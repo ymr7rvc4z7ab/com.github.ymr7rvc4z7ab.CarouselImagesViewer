@@ -7,8 +7,6 @@ on:
 
 jobs:
   build:
-    needs: update-nuget
-    if: success()
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-25.08
