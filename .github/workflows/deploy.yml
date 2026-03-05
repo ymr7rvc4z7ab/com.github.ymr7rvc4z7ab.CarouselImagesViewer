@@ -30,9 +30,6 @@ jobs:
         with:
           python-version: '3.14'
 
-      - name: Generate nuget-sources.json
-        run: python3 flatpak-dotnet-generator.py nuget-sources.json CarouselImagesViewer/CarouselImagesViewer.csproj
-
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v6
@@ -42,6 +39,9 @@ jobs:
 
       - name: Install Dependencies From Flathub
         run: flatpak-builder build-dir --install-deps-from=flathub --download-only com.github.ymr7rvc4z7ab.CarouselImagesViewer.yml
+
+      - name: Generate nuget-sources.json
+        run: python3 flatpak-dotnet-generator.py nuget-sources.json CarouselImagesViewer/CarouselImagesViewer.csproj
 
       - name: Build Flatpak Repository
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
