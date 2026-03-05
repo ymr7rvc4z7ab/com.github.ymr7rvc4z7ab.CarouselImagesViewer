@@ -13,6 +13,7 @@ jobs:
       options: --privileged
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DOTNET_CLI_HOME: /tmp
 
     steps:
       - name: Checkout repository
