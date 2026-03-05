@@ -26,6 +26,7 @@ jobs:
           repository: 'ymr7rvc4z7ab/CarouselImagesViewer'
           ref: 'main'
           token: ${{ secrets.SOURCE_TOKEN }}
+          path: 'CarouselImagesViewer'
 
       - name: Import GPG key
         id: import_gpg
