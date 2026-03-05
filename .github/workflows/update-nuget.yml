@@ -1,0 +1,36 @@
+name: Update NuGet sources
+
+on:
+  push:
+
+jobs:
+  update-nuget:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Current Repository
+        uses: actions/checkout@v6
+      
+      - name: Checkout Source Repository (main)
+        uses: actions/checkout@v6
+        repository: 'ymr7rvc4z7ab/CarouselImagesViewer'
+        ref: 'main'
+
+      - name: Setup Dotnet 10
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.103'
+          
+      - name: Generate nuget-sources.json
+        run: |
+          python3 flatpak-dotnet-generator.py nuget-sources.json CarouselImagesViewer/CarouselImagesViewer.csproj
+
+      - name: Commit If Changed
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
+            git add nuget-sources.json
+            git commit -m "Update nuget-sources.json"
+            git push
+          fi
