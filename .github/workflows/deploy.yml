@@ -6,44 +6,6 @@ on:
     branches: [ "main" ]
 
 jobs:
-  update-nuget:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-      
-      - name: Checkout Source Repository
-        uses: actions/checkout@v6
-        with:
-          repository: 'ymr7rvc4z7ab/CarouselImagesViewer'
-          ref: 'main'
-          token: ${{ secrets.SOURCE_TOKEN }}
-          path: 'CarouselImagesViewer'
-
-      - name: Setup Dotnet 10
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: '10.0.103'
-
-      - name: Setup Python 3
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.14'
-          
-      - name: Generate nuget-sources.json
-        run: python3 flatpak-dotnet-generator.py nuget-sources.json CarouselImagesViewer/CarouselImagesViewer.csproj
-
-      - name: Commit If Changed
-        run: |
-          if ! git diff --quiet; then
-            git config user.name "github-actions"
-            git config user.email "github-actions@github.com"
-            git add nuget-sources.json
-            git commit -m "Update nuget-sources.json"
-            git push
-          fi
-
   build:
     needs: update-nuget
     if: success()
@@ -67,6 +29,19 @@ jobs:
           ref: 'main'
           token: ${{ secrets.SOURCE_TOKEN }}
           path: 'CarouselImagesViewer'
+
+      - name: Setup Dotnet 10
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.103'
+
+      - name: Setup Python 3
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+          
+      - name: Generate nuget-sources.json
+        run: python3 flatpak-dotnet-generator.py nuget-sources.json CarouselImagesViewer/CarouselImagesViewer.csproj
 
       - name: Import GPG key
         id: import_gpg
