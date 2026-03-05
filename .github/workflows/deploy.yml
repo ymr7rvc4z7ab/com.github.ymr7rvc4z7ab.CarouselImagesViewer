@@ -12,8 +12,7 @@ jobs:
       image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-25.08
       options: --privileged
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+        DOTNET_CLI_HOME: /tmp
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
