@@ -39,12 +39,13 @@ modules:
         url: https://github.com/ymr7rvc4z7ab/CarouselImagesViewer.git
         commit: b19593a70344a8f2199464c5f079cd690700c329
         tag: v1.3.0
-      - ./nuget-sources.json
+      - ./flatpak-dotnet-generator.py
       - type: file
         path: com.github.ymr7rvc4z7ab.CarouselImagesViewer.desktop
       - type: file
         path: com.github.ymr7rvc4z7ab.CarouselImagesViewer.svg
     build-commands:
+      - python3 flatpak-dotnet-generator.py nuget-sources.json CarouselImagesViewer.csproj
       - mkdir -p ${FLATPAK_DEST}/bin
       - dotnet publish -c Release --source ./nuget-sources --source /usr/lib/sdk/dotnet10/nuget/packages CarouselImagesViewer.csproj --runtime $RUNTIME --no-self-contained
       - cp -r --remove-destination /run/build/CarouselImagesViewer/bin/Release/net10.0/$RUNTIME/publish/* /app/bin/
