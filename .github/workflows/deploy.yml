@@ -28,6 +28,13 @@ jobs:
           token: ${{ secrets.SOURCE_TOKEN }}
           path: 'CarouselImagesViewer'
 
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
       - name: Setup Dotnet 10
         uses: actions/setup-dotnet@v5
         with:
@@ -37,19 +44,12 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: '3.14'
-          
-      - name: Generate nuget-sources.json
-        run: python3 flatpak-dotnet-generator.py nuget-sources.json CarouselImagesViewer/CarouselImagesViewer.csproj
-
-      - name: Import GPG key
-        id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v6
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Install Dependencies From Flathub
         run: flatpak-builder build-dir --install-deps-from=flathub --download-only com.github.ymr7rvc4z7ab.CarouselImagesViewer.yml
+          
+      - name: Generate nuget-sources.json
+        run: python3 flatpak-dotnet-generator.py nuget-sources.json CarouselImagesViewer/CarouselImagesViewer.csproj
 
       - name: Build Flatpak Repository
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
