@@ -20,6 +20,19 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup Dotnet 10
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.103'
+
+      - name: Setup Python 3
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+
+      - name: Generate nuget-sources.json
+        run: python3 flatpak-dotnet-generator.py nuget-sources.json CarouselImagesViewer/CarouselImagesViewer.csproj
+
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v6
